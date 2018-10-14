@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 // Index route
 app.get('/', function (req, res) {
-    res.send('Zdravo! Ja sam četbot. Napiši mi nešto.')
+    res.status(200).send('Zdravo! Ja sam četbot. Napiši mi nešto.')
 });
 
 // for Facebook verification
