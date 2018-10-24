@@ -2,9 +2,12 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const request = require('request'); //dodao 
+
 const app = express();
 
 app.set('port', (process.env.PORT || 5000));
+// console.log(process.env.PORT)
 
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -19,7 +22,8 @@ app.get('/', function (req, res) {
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+    console.log(req)
+    if (req.query['hub.verify_token'] === 'gentlemanchoicebottoken'  ) {
         res.send(req.query['hub.challenge'])
     }
     res.send('Error, wrong token')
@@ -27,14 +31,14 @@ app.get('/webhook/', function (req, res) {
 
 // Spin up the server
 app.listen(app.get('port'), function() {
-    console.log('running on port', app.get('port'))
+    console.log('Server running on port', app.get('port'))
 });
 
 
 
 app.post('/webhook', function (req, res) {
     var data = req.body;
-  
+    // console.log(data.object)
     // Make sure this is a page subscription
     if (data.object === 'page') {
   
@@ -58,7 +62,8 @@ app.post('/webhook', function (req, res) {
       // You must send back a 200, within 20 seconds, to let the platform know
       // you've successfully received the callback. Otherwise, the request
       // will time out and Fawebook Messenger Platform will keep trying to resend.
-      res.sendStatus(200);
+      // res.sendStatus(200);
+      res.status(200).send();
     }
   });
   
